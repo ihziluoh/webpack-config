@@ -5,6 +5,7 @@ const path = require("path");
 const isProduction = process.env.NODE_ENV == "production";
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const config = {
   entry: "./src/js/index.js",
@@ -23,7 +24,10 @@ const config = {
         // 新的html文件有两个特点：1. 内容和源文件一致 2. 自动引入打包生成的js等资源
         template: path.resolve(__dirname, "./src/html/index.html"),
     }),
-    new MiniCssExtractPlugin({})
+    new MiniCssExtractPlugin({}), //css 提取为单独文件
+
+     // css压缩
+     new CssMinimizerPlugin(), //css 压缩
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
