@@ -6,6 +6,7 @@ const isProduction = process.env.NODE_ENV == "production";
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const ESLintWebpackPlugin = require("eslint-webpack-plugin");
 
 const config = {
   entry: "./src/js/index.js",
@@ -31,6 +32,14 @@ const config = {
 
      // css压缩
      new CssMinimizerPlugin(), //css 压缩
+
+     //检测 js 和 jsx 语法的工具
+     //npm i eslint-webpack-plugin eslint -D
+
+     new ESLintWebpackPlugin({
+      // 指定检查文件的根目录
+      context: path.resolve(__dirname, "src"),
+    }),
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
@@ -125,7 +134,12 @@ const config = {
           filename: "static/imgs/[hash:8][ext][query]",
         },
       },
-
+      {
+        //主要用于将 ES6 语法编写的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中
+        test: /\.js$/,
+        exclude: /node_modules/, // 排除node_modules代码不编译
+        loader: "babel-loader",
+      },
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/
     ],
