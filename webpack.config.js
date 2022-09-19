@@ -24,7 +24,10 @@ const config = {
         // 新的html文件有两个特点：1. 内容和源文件一致 2. 自动引入打包生成的js等资源
         template: path.resolve(__dirname, "./src/html/index.html"),
     }),
-    new MiniCssExtractPlugin({}), //css 提取为单独文件
+    new MiniCssExtractPlugin({
+        // 定义输出文件名和目录
+        filename: "static/css/main.css",
+    }), //css 提取为单独文件
 
      // css压缩
      new CssMinimizerPlugin(), //css 压缩
