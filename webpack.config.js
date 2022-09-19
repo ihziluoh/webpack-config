@@ -28,6 +28,12 @@ const config = {
   module: {
     rules: [
       {
+          test: /\.html$/,
+          // 使用html-loader处理html文件中引入的图片
+          // html-loader是专门处理img图片,引入img,从而被url-loader处理
+          loader:"html-loader"
+      },
+      {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
       },
