@@ -14,6 +14,9 @@ const config = {
     path: path.resolve(__dirname, "dist"),
     clean:true //清除上次打包内容文件
   },
+  // 生产模式：source-map 优点：包含行/列映射 缺点：打包编译速度更慢
+  // 开发模式：cheap-module-source-map 优点：打包编译速度快，只包含行映射 缺点：没有列映射
+  devtool: isProduction ? "source-map" : "cheap-module-source-map",
   devServer: {
     open: true,
     host: "localhost",
