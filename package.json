@@ -19,6 +19,8 @@
     "css-loader": "^6.7.1",
     "html-loader": "^4.1.0",
     "mini-css-extract-plugin": "^2.6.1",
+    "postcss-loader": "^7.0.1",
+    "postcss-px-to-viewport": "^1.1.1",
     "sass-loader": "^13.0.2"
   }
 }

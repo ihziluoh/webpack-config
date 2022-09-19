@@ -46,6 +46,9 @@ const config = {
             options: {
               importLoaders: 1,
             }
+          },{
+            //npm install css-loader
+            loader: 'postcss-loader',
           },
           {
             //npm install sass-loader  
@@ -67,6 +70,9 @@ const config = {
             options: {
               importLoaders: 1,
             }
+          },{
+            //npm install css-loader
+            loader: 'postcss-loader',
           }
         ]
       }
