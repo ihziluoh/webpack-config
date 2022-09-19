@@ -3,10 +3,26 @@
     margin: 0;
     box-sizing: border-box;
 }
-$img-max-height:300px;
+$img-max-height:500px;
+body{
+    background-color: #eee;
+}
 img{
     width: 100%;
     max-height: $img-max-height;
     object-fit: cover;
+    // border-bottom-left-radius: 30px;
+    // border-bottom-right-radius: 30px;
+    // box-shadow: 1px 1px 100px #000;
 }
-
+h1{
+    padding: 10px 50px;
+    font-size: 60px;
+    color: darkslategray;
+    font-weight: 900;
+}
+h2{
+    padding:0 50px;
+    font-size: 36px;
+    color: #cecece;
+}
