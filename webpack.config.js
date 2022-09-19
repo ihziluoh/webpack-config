@@ -13,6 +13,7 @@ const config = {
   mode:isProduction ? 'production':'development',
   output: {
     path: path.resolve(__dirname, "dist"),
+    filename:"static/js/[name]_[hash:8].js",
     clean:true //清除上次打包内容文件
   },
   // 生产模式：source-map 优点：包含行/列映射 缺点：打包编译速度更慢
@@ -20,7 +21,7 @@ const config = {
   devtool: isProduction ? "source-map" : "cheap-module-source-map",
   devServer: {
     open: true,
-    host: "localhost",
+    host: "0.0.0.0",
   },
   plugins: [
     // mpn install html-webpack-plugin 安装
@@ -31,7 +32,7 @@ const config = {
     }),
     new MiniCssExtractPlugin({
         // 定义输出文件名和目录
-        filename: "static/css/main.css",
+        filename: "static/css/[name].[hash:8].css",
     }), //css 提取为单独文件
 
      // css压缩
@@ -153,7 +154,43 @@ const config = {
   },
 };
 
+ // 多入口配置 Start-------------------------------------------
 module.exports = () => {
+  let chunks =[
+      { 
+        entry:"./src/js/index.js",
+        template:path.resolve(__dirname, "./src/html/index.html"),
+        filename:'index.html',
+        name:'index'//生成的文件名[name]
+      },
+      { 
+        entry:"./src/js/index.js",
+        template:path.resolve(__dirname, "./src/html/about.html"),
+        filename:'about.html',
+        name:'about' //生成的文件名[name]
+      }
+  ];
+
+  if(chunks){
+      config.entry ={}; //重置入口配置
+      chunks.forEach(element => {
+        //增加多入口js文件
+        config.entry[element.name]= element.entry;
+        //多入口处理html文件
+        config.plugins.push(
+          new HtmlWebpackPlugin({
+            // 指定检查文件的根目录
+            template:element.template,
+            chunks:element.name,
+            filename:element.filename
+          })
+        )
+      });
+  }
+ 
+ 
+  //多入口配置 End-------------------------------------------
+
   //oneof 处理只能匹配上一个 loader, 剩下的就不匹配了。
   config.module.rules=[{oneOf:config.module.rules}];
   return config;
