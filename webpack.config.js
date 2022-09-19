@@ -10,6 +10,7 @@ const ESLintWebpackPlugin = require("eslint-webpack-plugin");
 
 const config = {
   entry: "./src/js/index.js",
+  mode:isProduction ? 'production':'development',
   output: {
     path: path.resolve(__dirname, "dist"),
     clean:true //清除上次打包内容文件
@@ -153,10 +154,7 @@ const config = {
 };
 
 module.exports = () => {
-  if (isProduction) {
-    config.mode = "production";
-  } else {
-    config.mode = "development";
-  }
+  //oneof 处理只能匹配上一个 loader, 剩下的就不匹配了。
+  config.module.rules=[{oneOf:config.module.rules}];
   return config;
 };
