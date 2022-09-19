@@ -8,6 +8,22 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const ESLintWebpackPlugin = require("eslint-webpack-plugin");
 
+const BMParser = require('bookmark-parser');
+
+// Read from (NETSCAPE/Firefox) bookmark HTML file
+BMParser.readFromHTMLFile("./src/html/bookmarks_2022_9_19.html")
+.then(res => { 
+  res.Bookmarks.children.forEach(element => {
+    element.children.forEach(objFloder=>{      
+      objFloder.children.forEach(objLink=>{
+          console.log(objLink.name,objLink.url,objFloder.name)
+      })
+    })
+  })
+});
+
+
+
 const config = {
   entry: "./src/js/index.js",
   mode:isProduction ? 'production':'development',
@@ -152,6 +168,20 @@ const config = {
   performance: {
       maxAssetSize: 83886080, // 10M 资源(asset)是从 webpack 生成的任何文件。此选项根据单个资源体积(单位: bytes)
   },
+  // target: 'node',
+  // resolve: {
+  //   fallback: {
+  //     "path": require.resolve("path-browserify") ,
+  //     "os": require.resolve("os-browserify/browser"),
+  //     "fs": "empty", // do not include a polyfill for abc
+  //     // xyz: path.resolve(__dirname, 'path/to/file.js'), // include a polyfill for xyz
+  //   },
+  // },
+
+  // externals: {
+  //   fs: require('fs'),
+  // },
+  
 };
 
  // 多入口配置 Start-------------------------------------------
