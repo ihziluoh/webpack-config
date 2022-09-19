@@ -1,0 +1,12 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+$img-max-height:300px;
+img{
+    width: 100%;
+    max-height: $img-max-height;
+    object-fit: cover;
+}
+

@@ -16,6 +16,9 @@
     "webpack-dev-server": "^4.11.0"
   },
   "dependencies": {
-    "html-loader": "^4.1.0"
+    "css-loader": "^6.7.1",
+    "html-loader": "^4.1.0",
+    "mini-css-extract-plugin": "^2.6.1",
+    "sass-loader": "^13.0.2"
   }
 }

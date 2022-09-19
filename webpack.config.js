@@ -4,6 +4,7 @@ const path = require("path");
 
 const isProduction = process.env.NODE_ENV == "production";
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const config = {
   entry: "./src/js/index.js",
@@ -21,7 +22,7 @@ const config = {
         // 新的html文件有两个特点：1. 内容和源文件一致 2. 自动引入打包生成的js等资源
         template: path.resolve(__dirname, "./src/html/index.html"),
     }),
-
+    new MiniCssExtractPlugin({})
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
   ],
@@ -33,6 +34,43 @@ const config = {
           // html-loader是专门处理img图片,引入img,从而被url-loader处理
           loader:"html-loader"
       },
+      {
+        test: /\.s[ac]ss$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            }
+          },
+          {
+            //npm install sass-loader  
+            loader: 'sass-loader'
+          },
+        ]
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            //npm install mini-css-extract-plugin
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            //npm install css-loader
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            }
+          }
+        ]
+      }
+      ,
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
