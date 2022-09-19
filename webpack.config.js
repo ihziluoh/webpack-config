@@ -78,8 +78,18 @@ const config = {
       }
       ,
       {
-        test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+        test: /\.(eot|svg|ttf|woff|woff2)$/i,
         type: "asset",
+      },
+      //图片处理
+      {
+        test: /\.(png|jpe?g|gif|webp)$/,
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024 // 小于10kb的图片会被base64处理
+          }
+        }
       },
 
       // Add your rules for custom modules here
