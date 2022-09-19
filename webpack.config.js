@@ -10,6 +10,7 @@ const config = {
   entry: "./src/js/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
+    clean:true //清除上次打包内容文件
   },
   devServer: {
     open: true,
@@ -78,23 +79,52 @@ const config = {
       }
       ,
       {
+        //处理视频音频格式
+        test: /\.(mp4|MP4|mp3|avi|mov)$/,
+        type: "asset/resource",
+        generator: {
+          filename: "static/media/[hash:8][ext][query]",
+        },
+      },
+      {
         test: /\.(eot|svg|ttf|woff|woff2)$/i,
         type: "asset",
+        generator: {
+          // 将图片文件输出到 static/imgs 目录中
+          // 将图片文件命名 [hash:8][ext][query]
+          // [hash:8]: hash值取8位
+          // [ext]: 使用之前的文件扩展名
+          // [query]: 添加之前的query参数
+          filename: "static/fonts/[hash:8][ext][query]",
+        },
       },
       //图片处理
       {
         test: /\.(png|jpe?g|gif|webp)$/,
         type: "asset",
+        //asset/resource 相当于 file-loader  文件转化成 Webpack 能识别的资源，其他不做处理
+        // asset 相当于url-loader 将文件转化成 Webpack 能识别的资源，同时小于某个大小的资源会处理成 data URI 形式
         parser: {
           dataUrlCondition: {
             maxSize: 10 * 1024 // 小于10kb的图片会被base64处理
           }
-        }
+        } 
+        ,generator: {
+          // 将图片文件输出到 static/imgs 目录中
+          // 将图片文件命名 [hash:8][ext][query]
+          // [hash:8]: hash值取8位
+          // [ext]: 使用之前的文件扩展名
+          // [query]: 添加之前的query参数
+          filename: "static/imgs/[hash:8][ext][query]",
+        },
       },
 
       // Add your rules for custom modules here
       // Learn more about loaders from https://webpack.js.org/loaders/
     ],
+  },
+  performance: {
+      maxAssetSize: 83886080, // 10M 资源(asset)是从 webpack 生成的任何文件。此选项根据单个资源体积(单位: bytes)
   },
 };
 
